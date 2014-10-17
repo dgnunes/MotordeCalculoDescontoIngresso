@@ -8,7 +8,6 @@ public class MotorDesconto {
 	
 	//Construtores
 	public MotorDesconto(Calendar dia, Integer comprador, boolean carteirinha) {
-		
 		if (!carteirinha) {
 			switch(comprador){
 			case 1:
@@ -25,9 +24,11 @@ public class MotorDesconto {
 				
 			}
 		}
-		else {
+		//Considerado que com apresentação de Carteirinha, pessoa será tratada como Estudante, independente da Idade.
+		else if (comprador >= 1 && comprador <= 3){
 			this.pessoa = new Estudante (dia, carteirinha);
-		}
+		} else
+			throw new InputMismatchException("Tipo de Comprador inválido");
 	}
 	
 	public MotorDesconto(Calendar dia, Integer comprador) {
@@ -50,6 +51,10 @@ public class MotorDesconto {
 	//TODO Não etá tratando feriados.
 	public float calculapreco(){
 		//Arredonda para 2 casas decimais
-		return (float)Math.ceil(pessoa.calculaPreçoFinal() * 1000) / 1000;
+		return (float)Math.ceil(pessoa.calculaPreçoFinal() * 100) / 100;
+	}
+	
+	public Pessoa getPessoa(){
+		return pessoa;
 	}
 }
